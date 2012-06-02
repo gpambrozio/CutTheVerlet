@@ -176,6 +176,12 @@
 		ECB48F00157A60FB0066BE66 /* HelloWorldLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = ECB48EFF157A60FB0066BE66 /* HelloWorldLayer.mm */; };
 		ECB48F03157A60FB0066BE66 /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = ECB48F02157A60FB0066BE66 /* GLES-Render.mm */; };
 		ECB48F06157A60FB0066BE66 /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = ECB48F05157A60FB0066BE66 /* PhysicsSprite.mm */; };
+		ECB48F1A157A6A4B0066BE66 /* CutTheVerlet-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = ECB48F14157A6A4B0066BE66 /* CutTheVerlet-hd.plist */; };
+		ECB48F1B157A6A4B0066BE66 /* CutTheVerlet-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = ECB48F15157A6A4B0066BE66 /* CutTheVerlet-hd.pvr.ccz */; };
+		ECB48F1C157A6A4B0066BE66 /* CutTheVerlet.plist in Resources */ = {isa = PBXBuildFile; fileRef = ECB48F16157A6A4B0066BE66 /* CutTheVerlet.plist */; };
+		ECB48F1D157A6A4B0066BE66 /* CutTheVerlet.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = ECB48F17157A6A4B0066BE66 /* CutTheVerlet.pvr.ccz */; };
+		ECB48F1E157A6A4B0066BE66 /* rope_texture-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = ECB48F18157A6A4B0066BE66 /* rope_texture-hd.png */; };
+		ECB48F1F157A6A4B0066BE66 /* rope_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = ECB48F19157A6A4B0066BE66 /* rope_texture.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -533,6 +539,12 @@
 		ECB48F02157A60FB0066BE66 /* GLES-Render.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
 		ECB48F04157A60FB0066BE66 /* PhysicsSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
 		ECB48F05157A60FB0066BE66 /* PhysicsSprite.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PhysicsSprite.mm; sourceTree = "<group>"; };
+		ECB48F14157A6A4B0066BE66 /* CutTheVerlet-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CutTheVerlet-hd.plist"; sourceTree = "<group>"; };
+		ECB48F15157A6A4B0066BE66 /* CutTheVerlet-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CutTheVerlet-hd.pvr.ccz"; sourceTree = "<group>"; };
+		ECB48F16157A6A4B0066BE66 /* CutTheVerlet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CutTheVerlet.plist; sourceTree = "<group>"; };
+		ECB48F17157A6A4B0066BE66 /* CutTheVerlet.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = CutTheVerlet.pvr.ccz; sourceTree = "<group>"; };
+		ECB48F18157A6A4B0066BE66 /* rope_texture-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rope_texture-hd.png"; sourceTree = "<group>"; };
+		ECB48F19157A6A4B0066BE66 /* rope_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rope_texture.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -609,6 +621,7 @@
 		ECB48CF8157A60F50066BE66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				ECB48F13157A6A4B0066BE66 /* Images */,
 				ECB48CF9157A60F50066BE66 /* Default.png */,
 				ECB48CFB157A60F50066BE66 /* fps_images.png */,
 				ECB48CFD157A60F50066BE66 /* fps_images-hd.png */,
@@ -1123,6 +1136,19 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		ECB48F13157A6A4B0066BE66 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				ECB48F14157A6A4B0066BE66 /* CutTheVerlet-hd.plist */,
+				ECB48F15157A6A4B0066BE66 /* CutTheVerlet-hd.pvr.ccz */,
+				ECB48F16157A6A4B0066BE66 /* CutTheVerlet.plist */,
+				ECB48F17157A6A4B0066BE66 /* CutTheVerlet.pvr.ccz */,
+				ECB48F18157A6A4B0066BE66 /* rope_texture-hd.png */,
+				ECB48F19157A6A4B0066BE66 /* rope_texture.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1186,6 +1212,12 @@
 				ECB48D0C157A60F50066BE66 /* Icon@2x.png in Resources */,
 				ECB48D0F157A60F50066BE66 /* iTunesArtwork in Resources */,
 				ECB48E48157A60F90066BE66 /* ChangeLog in Resources */,
+				ECB48F1A157A6A4B0066BE66 /* CutTheVerlet-hd.plist in Resources */,
+				ECB48F1B157A6A4B0066BE66 /* CutTheVerlet-hd.pvr.ccz in Resources */,
+				ECB48F1C157A6A4B0066BE66 /* CutTheVerlet.plist in Resources */,
+				ECB48F1D157A6A4B0066BE66 /* CutTheVerlet.pvr.ccz in Resources */,
+				ECB48F1E157A6A4B0066BE66 /* rope_texture-hd.png in Resources */,
+				ECB48F1F157A6A4B0066BE66 /* rope_texture.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
