@@ -50,6 +50,20 @@ enum {
 		
 		self.isTouchEnabled = YES;
 		
+        // Load the sprite sheet into the sprite cache
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CutTheVerlet.plist"];
+        
+		// Add the background
+        CCSprite *background = [CCSprite spriteWithSpriteFrameName:@"bg.png"];
+        background.anchorPoint = CGPointZero;
+        [self addChild:background z:-1];
+        
+        // Add the croc
+        croc_ = [CCSprite spriteWithSpriteFrameName:@"croc_front_mouthclosed.png"];
+        croc_.anchorPoint = CGPointMake(1.0, 0.0);
+        croc_.position = CGPointMake(320.0, 30.0);
+        [self addChild:croc_ z:1];
+        
 		// init physics
 		[self initPhysics];
 		
