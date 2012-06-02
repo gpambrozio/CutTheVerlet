@@ -69,7 +69,10 @@
 			VPoint *point2 = [[vSticks objectAtIndex:i] getPointB];
 			CGPoint stickVector = ccpSub(ccp(point1.x,point1.y),ccp(point2.x,point2.y));
 			float stickAngle = ccpToAngle(stickVector);
-			CCSprite *tmpSprite = [CCSprite spriteWithBatchNode:spriteSheet rect:CGRectMake(0,0,multiplier,[[[spriteSheet textureAtlas] texture] pixelsHigh])];
+			CCSprite *tmpSprite = [CCSprite spriteWithTexture:spriteSheet.texture
+                                                         rect:CGRectMake(0,0,
+                                                                         multiplier,
+                                                                         [[[spriteSheet textureAtlas] texture] pixelsHigh]/CC_CONTENT_SCALE_FACTOR())];
 			ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
 			[tmpSprite.texture setTexParameters:&params];
 			[tmpSprite setPosition:ccpMidpoint(ccp(point1.x,point1.y),ccp(point2.x,point2.y))];
@@ -134,30 +137,6 @@
 			[tmpSprite setRotation: -CC_RADIANS_TO_DEGREES(stickAngle)];
 		}
 	}	
-}
-
--(void)debugDraw {
-	//Depending on scenario, you might need to have different Disable/Enable of Client States
-	//glDisableClientState(GL_TEXTURE_2D);
-	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	//glDisableClientState(GL_COLOR_ARRAY);
-	//set color and line width for ccDrawLine
-	glColor4f(0.0f,0.0f,1.0f,1.0f);
-	glLineWidth(5.0f);
-	for(int i=0;i<numPoints-1;i++) {
-		//"debug" draw
-		VPoint *pointA = [[vSticks objectAtIndex:i] getPointA];
-		VPoint *pointB = [[vSticks objectAtIndex:i] getPointB];
-		ccDrawPoint(ccp(pointA.x,pointA.y));
-		ccDrawPoint(ccp(pointB.x,pointB.y));
-		//ccDrawLine(ccp(pointA.x,pointA.y),ccp(pointB.x,pointB.y));
-	}
-	//restore to white and default thickness
-	glColor4f(1.0f,1.0f,1.0f,1.0f);
-	glLineWidth(1);
-	//glEnableClientState(GL_TEXTURE_2D);
-	//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	//glEnableClientState(GL_COLOR_ARRAY);
 }
 
 -(void)dealloc {

@@ -87,7 +87,6 @@ Good luck :)
 -(void)createRope:(CGPoint)pointA pointB:(CGPoint)pointB;
 -(void)resetWithPoints:(CGPoint)pointA pointB:(CGPoint)pointB;
 -(void)updateWithPoints:(CGPoint)pointA pointB:(CGPoint)pointB dt:(float)dt;
--(void)debugDraw;
 -(void)updateSprites;
 -(void)removeSprites;
 
