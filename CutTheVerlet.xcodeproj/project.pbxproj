@@ -182,6 +182,10 @@
 		ECB48F1D157A6A4B0066BE66 /* CutTheVerlet.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = ECB48F17157A6A4B0066BE66 /* CutTheVerlet.pvr.ccz */; };
 		ECB48F1E157A6A4B0066BE66 /* rope_texture-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = ECB48F18157A6A4B0066BE66 /* rope_texture-hd.png */; };
 		ECB48F1F157A6A4B0066BE66 /* rope_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = ECB48F19157A6A4B0066BE66 /* rope_texture.png */; };
+		ECB48F2C157AB4AA0066BE66 /* rope.png in Resources */ = {isa = PBXBuildFile; fileRef = ECB48F25157AB4AA0066BE66 /* rope.png */; };
+		ECB48F2D157AB4AA0066BE66 /* VPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB48F27157AB4AA0066BE66 /* VPoint.m */; };
+		ECB48F2E157AB4AA0066BE66 /* VRope.mm in Sources */ = {isa = PBXBuildFile; fileRef = ECB48F29157AB4AA0066BE66 /* VRope.mm */; };
+		ECB48F2F157AB4AA0066BE66 /* VStick.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB48F2B157AB4AA0066BE66 /* VStick.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -545,6 +549,13 @@
 		ECB48F17157A6A4B0066BE66 /* CutTheVerlet.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = CutTheVerlet.pvr.ccz; sourceTree = "<group>"; };
 		ECB48F18157A6A4B0066BE66 /* rope_texture-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rope_texture-hd.png"; sourceTree = "<group>"; };
 		ECB48F19157A6A4B0066BE66 /* rope_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rope_texture.png; sourceTree = "<group>"; };
+		ECB48F25157AB4AA0066BE66 /* rope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rope.png; sourceTree = "<group>"; };
+		ECB48F26157AB4AA0066BE66 /* VPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPoint.h; sourceTree = "<group>"; };
+		ECB48F27157AB4AA0066BE66 /* VPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VPoint.m; sourceTree = "<group>"; };
+		ECB48F28157AB4AA0066BE66 /* VRope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VRope.h; sourceTree = "<group>"; };
+		ECB48F29157AB4AA0066BE66 /* VRope.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VRope.mm; sourceTree = "<group>"; };
+		ECB48F2A157AB4AA0066BE66 /* VStick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VStick.h; sourceTree = "<group>"; };
+		ECB48F2B157AB4AA0066BE66 /* VStick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VStick.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -611,6 +622,7 @@
 				ECB48F02157A60FB0066BE66 /* GLES-Render.mm */,
 				ECB48F04157A60FB0066BE66 /* PhysicsSprite.h */,
 				ECB48F05157A60FB0066BE66 /* PhysicsSprite.mm */,
+				ECB48F24157AB4AA0066BE66 /* vrope-latest */,
 				ECB48CF8157A60F50066BE66 /* Resources */,
 				ECB48D10157A60F50066BE66 /* libs */,
 				ECB48EF7157A60FA0066BE66 /* Supporting Files */,
@@ -1149,6 +1161,20 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		ECB48F24157AB4AA0066BE66 /* vrope-latest */ = {
+			isa = PBXGroup;
+			children = (
+				ECB48F25157AB4AA0066BE66 /* rope.png */,
+				ECB48F26157AB4AA0066BE66 /* VPoint.h */,
+				ECB48F27157AB4AA0066BE66 /* VPoint.m */,
+				ECB48F28157AB4AA0066BE66 /* VRope.h */,
+				ECB48F29157AB4AA0066BE66 /* VRope.mm */,
+				ECB48F2A157AB4AA0066BE66 /* VStick.h */,
+				ECB48F2B157AB4AA0066BE66 /* VStick.m */,
+			);
+			path = "vrope-latest";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1218,6 +1244,7 @@
 				ECB48F1D157A6A4B0066BE66 /* CutTheVerlet.pvr.ccz in Resources */,
 				ECB48F1E157A6A4B0066BE66 /* rope_texture-hd.png in Resources */,
 				ECB48F1F157A6A4B0066BE66 /* rope_texture.png in Resources */,
+				ECB48F2C157AB4AA0066BE66 /* rope.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1376,6 +1403,9 @@
 				ECB48F00157A60FB0066BE66 /* HelloWorldLayer.mm in Sources */,
 				ECB48F03157A60FB0066BE66 /* GLES-Render.mm in Sources */,
 				ECB48F06157A60FB0066BE66 /* PhysicsSprite.mm in Sources */,
+				ECB48F2D157AB4AA0066BE66 /* VPoint.m in Sources */,
+				ECB48F2E157AB4AA0066BE66 /* VRope.mm in Sources */,
+				ECB48F2F157AB4AA0066BE66 /* VStick.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
