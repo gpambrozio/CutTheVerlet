@@ -326,6 +326,59 @@ enum {
     return NO;
 }
 
+- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    static CGSize s = [[CCDirector sharedDirector] winSize];
+    
+    UITouch *touch = [touches anyObject];
+    CGPoint pt0 = [touch previousLocationInView:[touch view]];
+    CGPoint pt1 = [touch locationInView:[touch view]];
+    
+    // Correct Y axis coordinates to cocos2d coordinates
+    pt0.y = s.height - pt0.y;
+    pt1.y = s.height - pt1.y;
+    
+    for (VRope *rope in ropes)
+    {
+        for (VStick *stick in rope.sticks)
+        {
+            CGPoint pa = [[stick getPointA] point];
+            CGPoint pb = [[stick getPointB] point];
+            
+            if ([self checkLineIntersection:pt0 :pt1 :pa :pb])
+            {
+                // Cut the rope here
+                b2Body *newBodyA = [self createRopeTipBody];
+                b2Body *newBodyB = [self createRopeTipBody];
+                
+                VRope *newRope = [rope cutRopeInStick:stick newBodyA:newBodyA newBodyB:newBodyB];
+                [ropes addObject:newRope];
+                return;
+            }
+        }
+    }
+}
+
+-(b2Body *) createRopeTipBody
+{
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.linearDamping = 0.5f;
+    b2Body *body = world->CreateBody(&bodyDef);
+    
+    b2FixtureDef circleDef;
+    b2CircleShape circle;
+    circle.m_radius = 1.0/PTM_RATIO;
+    circleDef.shape = &circle;
+    circleDef.density = 10.0f;
+    
+    // Since these tips don't have to collide with anything
+    // set the mask bits to zero
+    circleDef.filter.maskBits = 0;
+    body->CreateFixture(&circleDef);
+    
+    return body;
+}
 
 #pragma mark GameKit delegate
 
