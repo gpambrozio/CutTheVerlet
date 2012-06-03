@@ -74,17 +74,16 @@ Good luck :)
 	CCSpriteBatchNode* spriteSheet;
 	float antiSagHack;
 	#ifdef BOX2D_H
-	b2Body *bodyA;
-	b2Body *bodyB;
+    b2RopeJoint *joint;
 	#endif
 }
 #ifdef BOX2D_H
--(id)init:(b2Body*)body1 body2:(b2Body*)body2 spriteSheet:(CCSpriteBatchNode*)spriteSheetArg;
+-(id)initWithRopeJoint:(b2RopeJoint*)joint spriteSheet:(CCSpriteBatchNode*)spriteSheetArg;
 -(void)update:(float)dt;
 -(void)reset;
 #endif
 -(id)initWithPoints:(CGPoint)pointA pointB:(CGPoint)pointB spriteSheet:(CCSpriteBatchNode*)spriteSheetArg;
--(void)createRope:(CGPoint)pointA pointB:(CGPoint)pointB;
+-(void)createRope:(CGPoint)pointA pointB:(CGPoint)pointB distance:(float)distance;
 -(void)resetWithPoints:(CGPoint)pointA pointB:(CGPoint)pointB;
 -(void)updateWithPoints:(CGPoint)pointA pointB:(CGPoint)pointB dt:(float)dt;
 -(void)updateSprites;

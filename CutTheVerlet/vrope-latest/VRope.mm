@@ -10,27 +10,26 @@
 @implementation VRope
 
 #ifdef BOX2D_H
--(id)init:(b2Body*)body1 body2:(b2Body*)body2 spriteSheet:(CCSpriteBatchNode*)spriteSheetArg {
+-(id)initWithRopeJoint:(b2RopeJoint*)aJoint spriteSheet:(CCSpriteBatchNode*)spriteSheetArg {
 	if((self = [super init])) {
-		bodyA = body1;
-		bodyB = body2;
-		CGPoint pointA = ccp(bodyA->GetPosition().x*PTM_RATIO,bodyA->GetPosition().y*PTM_RATIO);
-		CGPoint pointB = ccp(bodyB->GetPosition().x*PTM_RATIO,bodyB->GetPosition().y*PTM_RATIO);
+		joint = aJoint;
+		CGPoint pointA = ccp(joint->GetAnchorA().x*PTM_RATIO,joint->GetAnchorA().y*PTM_RATIO);
+		CGPoint pointB = ccp(joint->GetAnchorB().x*PTM_RATIO,joint->GetAnchorB().y*PTM_RATIO);
 		spriteSheet = spriteSheetArg;
-		[self createRope:pointA pointB:pointB];
+		[self createRope:pointA pointB:pointB distance:joint->GetMaxLength()*PTM_RATIO];
 	}
 	return self;
 }
 
 -(void)reset {
-	CGPoint pointA = ccp(bodyA->GetPosition().x*PTM_RATIO,bodyA->GetPosition().y*PTM_RATIO);
-	CGPoint pointB = ccp(bodyB->GetPosition().x*PTM_RATIO,bodyB->GetPosition().y*PTM_RATIO);
+	CGPoint pointA = ccp(joint->GetAnchorA().x*PTM_RATIO,joint->GetAnchorA().y*PTM_RATIO);
+	CGPoint pointB = ccp(joint->GetAnchorB().x*PTM_RATIO,joint->GetAnchorB().y*PTM_RATIO);
 	[self resetWithPoints:pointA pointB:pointB];
 }
 
 -(void)update:(float)dt {
-	CGPoint pointA = ccp(bodyA->GetPosition().x*PTM_RATIO,bodyA->GetPosition().y*PTM_RATIO);
-	CGPoint pointB = ccp(bodyB->GetPosition().x*PTM_RATIO,bodyB->GetPosition().y*PTM_RATIO);
+	CGPoint pointA = ccp(joint->GetAnchorA().x*PTM_RATIO,joint->GetAnchorA().y*PTM_RATIO);
+	CGPoint pointB = ccp(joint->GetAnchorB().x*PTM_RATIO,joint->GetAnchorB().y*PTM_RATIO);
 	[self updateWithPoints:pointA pointB:pointB dt:dt];
 }
 #endif
@@ -38,16 +37,15 @@
 -(id)initWithPoints:(CGPoint)pointA pointB:(CGPoint)pointB spriteSheet:(CCSpriteBatchNode*)spriteSheetArg {
 	if((self = [super init])) {
 		spriteSheet = spriteSheetArg;
-		[self createRope:pointA pointB:pointB];
+		[self createRope:pointA pointB:pointB distance:ccpDistance(pointA, pointB)];
 	}
 	return self;
 }
 
--(void)createRope:(CGPoint)pointA pointB:(CGPoint)pointB {
+-(void)createRope:(CGPoint)pointA pointB:(CGPoint)pointB distance:(float)distance {
 	vPoints = [[NSMutableArray alloc] init];
 	vSticks = [[NSMutableArray alloc] init];
 	ropeSprites = [[NSMutableArray alloc] init];
-	float distance = ccpDistance(pointA,pointB);
 	int segmentFactor = 12; //increase value to have less segments per rope, decrease to have more segments
 	numPoints = distance/segmentFactor;
 	CGPoint diffVector = ccpSub(pointB,pointA);
