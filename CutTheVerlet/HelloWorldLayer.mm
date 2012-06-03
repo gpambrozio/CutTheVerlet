@@ -15,6 +15,8 @@
 #import "PhysicsSprite.h"
 #import "VRope.h"
 
+#import <set>
+
 enum {
 	kTagParentNode = 1,
 };
@@ -86,6 +88,9 @@ enum {
 
     [ropes release];
     [candies release];
+
+    delete contactListener;
+    contactListener = NULL;
 
 	delete world;
 	world = NULL;
@@ -166,6 +171,10 @@ enum {
 	crocMouthBottom_ = crocMouth_->CreateFixture(&crocBox,0);
 	
     crocMouth_->SetActive(NO);
+
+    // Create contact listener
+    contactListener = new MyContactListener();
+    world->SetContactListener(contactListener);
 }
 
 -(void) draw
@@ -218,6 +227,178 @@ enum {
         [rope update:dt];
         [rope updateSprites];
     }
+    
+    // Check for collisions
+    bool shouldCloseCrocMouth = NO;
+    std::vector<b2Body *>toDestroy;
+    std::vector<MyContact>::iterator pos;
+    for(pos = contactListener->_contacts.begin(); pos != contactListener->_contacts.end(); ++pos)
+    {
+        MyContact contact = *pos;
+        
+        bool hitTheFloor = NO;
+        b2Body *potentialCandy = nil;
+        
+        // The candy can hit the floor or the croc's mouth. Let's check
+        // what it's touching.
+        if (contact.fixtureA == crocMouthBottom_)
+        {
+            potentialCandy = contact.fixtureB->GetBody();
+        }
+        else if (contact.fixtureB == crocMouthBottom_)
+        {
+            potentialCandy = contact.fixtureA->GetBody();
+        }
+        else if (contact.fixtureA->GetBody() == groundBody)
+        {
+            potentialCandy = contact.fixtureB->GetBody();
+            hitTheFloor = YES;
+        }
+        else if (contact.fixtureB->GetBody() == groundBody)
+        {
+            potentialCandy = contact.fixtureA->GetBody();
+            hitTheFloor = YES;
+        }
+        
+        // Check if the body was indeed one of the candies
+        if (potentialCandy && [candies indexOfObject:[NSValue valueWithPointer:potentialCandy]] != NSNotFound)
+        {
+            // Set it to be destroyed
+            toDestroy.push_back(potentialCandy);
+            if (hitTheFloor)
+            {
+                // If it hits the floor we'll remove all the physics of it and just simulate the pineapple sinking
+                CCSprite *sinkingCandy = (CCSprite*)potentialCandy->GetUserData();
+                
+                // Sink the pineapple
+                CCFiniteTimeAction *sink = [CCMoveBy actionWithDuration:3.0 position:CGPointMake(0, -sinkingCandy.textureRect.size.height)];
+                
+                // Remove the sprite and check if should finish the level.
+                CCFiniteTimeAction *finish = [CCCallBlockN actionWithBlock:^(CCNode *node)
+                                    {
+                                        [self removeChild:node cleanup:YES];
+                                        [self checkLevelFinish:YES];
+                                    }];
+                
+                // Run the actions sequentially.
+                [sinkingCandy runAction:[CCSequence actions:
+                                         sink,
+                                         finish,
+                                         nil]];
+                
+                // All the physics will be destroyed below, but we don't want the
+                // sprite do be removed, so we set it to null here.
+                potentialCandy->SetUserData(NULL);
+            }
+            else
+            {
+                shouldCloseCrocMouth = YES;
+            }
+        }
+    }
+    
+    std::vector<b2Body *>::iterator pos2;
+    for(pos2 = toDestroy.begin(); pos2 != toDestroy.end(); ++pos2)
+    {
+        b2Body *body = *pos2;
+        if (body->GetUserData() != NULL)
+        {
+            // Remove the sprite
+            CCSprite *sprite = (CCSprite *) body->GetUserData();
+            [self removeChild:sprite cleanup:YES];
+            body->SetUserData(NULL);
+        }
+        
+        // Iterate though the joins and check if any are a rope
+        b2JointEdge* joints = body->GetJointList();
+        while (joints)
+        {
+            b2Joint *joint = joints->joint;
+            
+            // Look in all the ropes
+            for (VRope *rope in ropes)
+            {
+                if (rope.joint == joint)
+                {
+                    // This "destroys" the rope
+                    [rope removeSprites];
+                    [ropes removeObject:rope];
+                    break;
+                }
+            }
+            
+            joints = joints->next;
+            world->DestroyJoint(joint);
+        }
+        
+        // Destroy the physics body
+        world->DestroyBody(body);
+        
+        // Removes from the candies array
+        [candies removeObject:[NSValue valueWithPointer:body]];
+    }
+    
+    if (shouldCloseCrocMouth)
+    {
+        // If the pineapple went into the croc's mouth, immediatelly closes it.
+        [self changeCrocAttitude];
+        
+        // Check if the level should finish
+        [self checkLevelFinish:NO];
+    }
+}
+
+-(void)checkLevelFinish:(BOOL)forceFinish
+{
+    if ([candies count] == 0 || forceFinish)
+    {
+        // Destroy everything
+        [self finishedLevel];
+        
+        // Schedule a level restart 2 seconds from now
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self initLevel];
+        });
+    }
+}
+
+-(void) finishedLevel
+{
+    std::set<b2Body *>toDestroy;
+    
+    // Destroy every rope and add the objects that should be destroyed
+    for (VRope *rope in ropes)
+    {
+        [rope removeSprites];
+        
+        // Don't destroy the ground body...
+        if (rope.joint->GetBodyA() != groundBody)
+            toDestroy.insert(rope.joint->GetBodyA());
+        if (rope.joint->GetBodyB() != groundBody)
+            toDestroy.insert(rope.joint->GetBodyB());
+        
+        // Destroy the joint already
+        world->DestroyJoint(rope.joint);
+    }
+    [ropes removeAllObjects];
+    
+    // Destroy all the objects
+    std::set<b2Body *>::iterator pos;
+    for(pos = toDestroy.begin(); pos != toDestroy.end(); ++pos)
+    {
+        b2Body *body = *pos;
+        if (body->GetUserData() != NULL)
+        {
+            // Remove the sprite
+            CCSprite *sprite = (CCSprite *) body->GetUserData();
+            [self removeChild:sprite cleanup:YES];
+            body->SetUserData(NULL);
+        }
+        world->DestroyBody(body);
+    }
+    
+    [candies removeAllObjects];
 }
 
 -(b2Body *) createCandyAt:(CGPoint)pt
