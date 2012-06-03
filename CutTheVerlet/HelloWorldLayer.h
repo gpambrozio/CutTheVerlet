@@ -27,6 +27,11 @@
 	GLESDebugDraw *m_debugDraw;		// strong ref
 
     CCSprite *croc_;            // weak ref
+
+    NSMutableArray *ropes;
+    NSMutableArray *candies;
+    b2Body* groundBody;    // weak ref
+    CCSpriteBatchNode *ropeSpriteSheet; // weak ref
 }
 
 // returns a CCScene that contains the HelloWorldLayer as the only child
