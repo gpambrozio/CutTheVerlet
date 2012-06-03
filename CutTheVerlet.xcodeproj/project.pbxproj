@@ -186,6 +186,7 @@
 		ECB48F2D157AB4AA0066BE66 /* VPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB48F27157AB4AA0066BE66 /* VPoint.m */; };
 		ECB48F2E157AB4AA0066BE66 /* VRope.mm in Sources */ = {isa = PBXBuildFile; fileRef = ECB48F29157AB4AA0066BE66 /* VRope.mm */; };
 		ECB48F2F157AB4AA0066BE66 /* VStick.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB48F2B157AB4AA0066BE66 /* VStick.m */; };
+		ECB48F38157BFAA40066BE66 /* MyContactListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = ECB48F37157BFAA30066BE66 /* MyContactListener.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -556,6 +557,8 @@
 		ECB48F29157AB4AA0066BE66 /* VRope.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VRope.mm; sourceTree = "<group>"; };
 		ECB48F2A157AB4AA0066BE66 /* VStick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VStick.h; sourceTree = "<group>"; };
 		ECB48F2B157AB4AA0066BE66 /* VStick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VStick.m; sourceTree = "<group>"; };
+		ECB48F36157BFAA30066BE66 /* MyContactListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyContactListener.h; sourceTree = "<group>"; };
+		ECB48F37157BFAA30066BE66 /* MyContactListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyContactListener.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -622,6 +625,8 @@
 				ECB48F02157A60FB0066BE66 /* GLES-Render.mm */,
 				ECB48F04157A60FB0066BE66 /* PhysicsSprite.h */,
 				ECB48F05157A60FB0066BE66 /* PhysicsSprite.mm */,
+				ECB48F36157BFAA30066BE66 /* MyContactListener.h */,
+				ECB48F37157BFAA30066BE66 /* MyContactListener.mm */,
 				ECB48F24157AB4AA0066BE66 /* vrope-latest */,
 				ECB48CF8157A60F50066BE66 /* Resources */,
 				ECB48D10157A60F50066BE66 /* libs */,
@@ -1406,6 +1411,7 @@
 				ECB48F2D157AB4AA0066BE66 /* VPoint.m in Sources */,
 				ECB48F2E157AB4AA0066BE66 /* VRope.mm in Sources */,
 				ECB48F2F157AB4AA0066BE66 /* VStick.m in Sources */,
+				ECB48F38157BFAA40066BE66 /* MyContactListener.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
