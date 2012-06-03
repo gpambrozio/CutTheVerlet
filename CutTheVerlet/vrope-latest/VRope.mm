@@ -12,6 +12,9 @@
 @synthesize sticks = vSticks;
 
 #ifdef BOX2D_H
+
+@synthesize joint = joint;
+
 -(id)initWithRopeJoint:(b2RopeJoint*)aJoint spriteSheet:(CCSpriteBatchNode*)spriteSheetArg {
 	if((self = [super init])) {
 		joint = aJoint;
