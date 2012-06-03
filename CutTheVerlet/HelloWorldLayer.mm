@@ -487,6 +487,17 @@ enum {
                         bodyB:groundBody anchorB:cc_to_b2Vec(s.width * 0.83, s.height * 0.6)
                           sag:1.1];
 
+    // Add the candy
+    b2Body *body2 = [self createCandyAt:CGPointMake(s.width * 0.5, s.height)];
+    
+    // Change the linear dumping so it swings more
+    body2->SetLinearDamping(0.01);
+    
+    // Add a bunch of ropes
+    [self createRopeWithBodyA:groundBody anchorA:cc_to_b2Vec(s.width * 0.65, s.height + 5)
+                        bodyB:body2 anchorB:body2->GetLocalCenter()
+                          sag:1.0];
+    
     // Advance the world by a few seconds to stabilize everything.
     int n = 10 * 60;
     int32 velocityIterations = 8;
