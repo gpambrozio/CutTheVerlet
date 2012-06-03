@@ -287,6 +287,24 @@ enum {
     [self createRopeWithBodyA:body1 anchorA:body1->GetLocalCenter()
                         bodyB:groundBody anchorB:cc_to_b2Vec(s.width * 0.83, s.height * 0.6)
                           sag:1.1];
+
+    // Advance the world by a few seconds to stabilize everything.
+    int n = 10 * 60;
+    int32 velocityIterations = 8;
+    int32 positionIterations = 1;
+    float32 dt = 1.0 / 60.0;
+    while (n--)
+    {
+        // Instruct the world to perform a single step of simulation.
+        world->Step(dt, velocityIterations, positionIterations);
+        for (VRope *rope in ropes)
+        {
+            [rope update:dt];
+        }
+    }
+    
+    // This last update takes care of the texture repositioning.
+    [self update:dt];
 }
 
 
