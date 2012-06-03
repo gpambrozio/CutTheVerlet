@@ -16,4 +16,5 @@
 -(void)contract;
 -(VPoint*)getPointA;
 -(VPoint*)getPointB;
+-(void)setPointB:(VPoint *)point;
 @end

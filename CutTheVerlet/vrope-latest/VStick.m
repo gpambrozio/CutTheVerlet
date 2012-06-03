@@ -35,4 +35,7 @@
 -(VPoint*)getPointB {
 	return pointB;
 }
+-(void)setPointB:(VPoint *)point {
+    pointB = point;
+}
 @end
