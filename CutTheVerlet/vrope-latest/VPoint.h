@@ -17,4 +17,6 @@
 -(void)update;
 -(void)applyGravity:(float)dt;
 
+-(CGPoint)point;
+
 @end

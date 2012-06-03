@@ -46,4 +46,8 @@
 	return y;
 }
 
+-(CGPoint)point {
+    return CGPointMake(x, y);
+}
+
 @end

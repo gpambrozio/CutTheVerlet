@@ -9,6 +9,8 @@
 
 @implementation VRope
 
+@synthesize sticks = vSticks;
+
 #ifdef BOX2D_H
 -(id)initWithRopeJoint:(b2RopeJoint*)aJoint spriteSheet:(CCSpriteBatchNode*)spriteSheetArg {
 	if((self = [super init])) {

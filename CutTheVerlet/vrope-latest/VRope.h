@@ -89,4 +89,6 @@ Good luck :)
 -(void)updateSprites;
 -(void)removeSprites;
 
+@property (nonatomic, readonly) NSArray *sticks;
+
 @end
