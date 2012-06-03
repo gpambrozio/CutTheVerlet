@@ -81,6 +81,7 @@ Good luck :)
 -(id)initWithRopeJoint:(b2RopeJoint*)joint spriteSheet:(CCSpriteBatchNode*)spriteSheetArg;
 -(void)update:(float)dt;
 -(void)reset;
+-(VRope *)cutRopeInStick:(VStick *)stick newBodyA:(b2Body*)newBodyA newBodyB:(b2Body*)newBodyB;
 #endif
 -(id)initWithPoints:(CGPoint)pointA pointB:(CGPoint)pointB spriteSheet:(CCSpriteBatchNode*)spriteSheetArg;
 -(void)createRope:(CGPoint)pointA pointB:(CGPoint)pointB distance:(float)distance;

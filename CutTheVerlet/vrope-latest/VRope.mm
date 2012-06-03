@@ -29,11 +29,116 @@
 	[self resetWithPoints:pointA pointB:pointB];
 }
 
+-(VRope *)cutRopeInStick:(VStick *)stick newBodyA:(b2Body*)newBodyA newBodyB:(b2Body*)newBodyB {
+    
+    // First, find out where in our array the rope will be cut
+    int nPoint = [vSticks indexOfObject:stick];
+    
+    // Instead of making everything again we'll just use the arrays of
+    // sticks, points and sprites we already have and split them
+    
+    // This is the range that defines the new rope
+    NSRange newRopeRange = (NSRange){nPoint, numPoints-nPoint-1};
+    
+    // Keep the sticks in a new array
+    NSArray *newRopeSticks = [vSticks subarrayWithRange:newRopeRange];
+    
+    // and remove from this object's array
+    [vSticks removeObjectsInRange:newRopeRange];
+    
+    // Same for the sprites
+    NSArray *newRopeSprites = [ropeSprites subarrayWithRange:newRopeRange];
+    [ropeSprites removeObjectsInRange:newRopeRange];
+    
+    // Number of points is always the number of sticks + 1
+    newRopeRange.length += 1;
+    NSArray *newRopePoints = [vPoints subarrayWithRange:newRopeRange];
+    [vPoints removeObjectsInRange:newRopeRange];
+    
+    // The removeObjectsInRange above removed the last point of
+    // this rope that now belongs to the new rope. We need to clone
+    // that VPoint and add it to this rope, otherwise we'll have a
+    // wrong number of points in this rope
+    VPoint *pointOfBreak = [newRopePoints objectAtIndex:0];
+    VPoint *newPoint = [[VPoint alloc] init];
+    [newPoint setPos:pointOfBreak.x y:pointOfBreak.y];
+    [vPoints addObject:newPoint];
+    
+    // And last: fix the last VStick of this rope to point to this new point
+    // instead of the old point that now belongs to the new rope
+    VStick *lastStick = [vSticks lastObject];
+    [lastStick setPointB:newPoint];
+    [newPoint release];
+    
+    // This will determine how long the rope is now and how long the new rope will be
+    float32 cutRatio = (float32)nPoint / (numPoints - 1);
+    
+    // Fix my number of points
+    numPoints = nPoint + 1;
+    
+    // Position in Box2d world where the new bodies will initially be
+    b2Vec2 newBodiesPosition = b2Vec2(pointOfBreak.x / PTM_RATIO, pointOfBreak.y / PTM_RATIO);
+
+    // Get a reference to the world to create the new joint
+    b2World *world = newBodyA->GetWorld();
+    
+    // Re-create the joint used in this VRope since bRopeJoint does not allow
+    // to re-define the attached bodies
+    b2RopeJointDef jd;
+    jd.bodyA = joint->GetBodyA();
+    jd.bodyB = newBodyB;
+    jd.localAnchorA = joint->GetLocalAnchorA();
+    jd.localAnchorB = b2Vec2(0, 0);
+    jd.maxLength = joint->GetMaxLength() * cutRatio;
+    newBodyB->SetTransform(newBodiesPosition, 0.0);
+    
+    b2RopeJoint *newJoint1 = (b2RopeJoint *)world->CreateJoint(&jd); //create joint
+
+    // Create the new rope joint
+    jd.bodyA = newBodyA;
+    jd.bodyB = joint->GetBodyB();
+    jd.localAnchorA = b2Vec2(0, 0);
+    jd.localAnchorB = joint->GetLocalAnchorB();
+    jd.maxLength = joint->GetMaxLength() * (1 - cutRatio);
+    newBodyA->SetTransform(newBodiesPosition, 0.0);
+    
+    b2RopeJoint *newJoint2 = (b2RopeJoint *)world->CreateJoint(&jd); //create joint
+
+    // Destroy the old joint and update to the new one
+    world->DestroyJoint(joint);
+    joint = newJoint1;
+    
+    // Finally, create the new VRope
+    VRope *newRope = [[VRope alloc] initWithRopeJoint:newJoint2
+                                          spriteSheet:spriteSheet
+                                               points:newRopePoints
+                                               sticks:newRopeSticks
+                                              sprites:newRopeSprites];
+    return [newRope autorelease];
+}
+
+-(id)initWithRopeJoint:(b2RopeJoint*)aJoint 
+           spriteSheet:(CCSpriteBatchNode*)spriteSheetArg
+                points:(NSArray*)points 
+                sticks:(NSArray*)sticks
+               sprites:(NSArray*)sprites {
+	if((self = [super init])) {
+        joint = aJoint;
+		spriteSheet = spriteSheetArg;
+        vPoints = [[NSMutableArray alloc] initWithArray:points];
+        vSticks = [[NSMutableArray alloc] initWithArray:sticks];
+        ropeSprites = [[NSMutableArray alloc] initWithArray:sprites];
+        numPoints = vPoints.count;
+	}
+	return self;
+}
+
 -(void)update:(float)dt {
 	CGPoint pointA = ccp(joint->GetAnchorA().x*PTM_RATIO,joint->GetAnchorA().y*PTM_RATIO);
 	CGPoint pointB = ccp(joint->GetAnchorB().x*PTM_RATIO,joint->GetAnchorB().y*PTM_RATIO);
 	[self updateWithPoints:pointA pointB:pointB dt:dt];
 }
+
 #endif
 
 -(id)initWithPoints:(CGPoint)pointA pointB:(CGPoint)pointB spriteSheet:(CCSpriteBatchNode*)spriteSheetArg {
