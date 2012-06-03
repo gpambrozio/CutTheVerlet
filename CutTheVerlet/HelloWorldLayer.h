@@ -35,6 +35,9 @@
 
     b2Body *crocMouth_;          // weak ref
     b2Fixture *crocMouthBottom_;    // weak ref
+
+    BOOL crocMouthOpened;
+    NSTimer *crocAttitudeTimer;
 }
 
 // returns a CCScene that contains the HelloWorldLayer as the only child

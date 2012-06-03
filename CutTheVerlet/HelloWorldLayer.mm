@@ -81,6 +81,9 @@ enum {
 
 -(void) dealloc
 {
+    [crocAttitudeTimer invalidate];
+    [crocAttitudeTimer release];
+
     [ropes release];
     [candies release];
 
@@ -320,6 +323,9 @@ enum {
     
     // This last update takes care of the texture repositioning.
     [self update:dt];
+    
+    crocMouthOpened = YES;
+    [self changeCrocAttitude];
 }
 
 - (BOOL)checkLineIntersection:(CGPoint)p1 :(CGPoint)p2 :(CGPoint)p3 :(CGPoint)p4
@@ -393,6 +399,24 @@ enum {
     body->CreateFixture(&circleDef);
     
     return body;
+}
+
+-(void)changeCrocAttitude
+{
+    crocMouthOpened = !crocMouthOpened;
+    NSString *spriteName = crocMouthOpened ? @"croc_front_mouthopen.png" : @"croc_front_mouthclosed.png";
+    [croc_ setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteName]];
+    [croc_ setZOrder:crocMouthOpened ? 1 : -1];
+    
+    crocMouth_->SetActive(crocMouthOpened);
+    
+    [crocAttitudeTimer invalidate];
+    [crocAttitudeTimer release];
+    crocAttitudeTimer = [[NSTimer scheduledTimerWithTimeInterval:3.0 + 2.0 * CCRANDOM_0_1() 
+                                                          target:self 
+                                                        selector:@selector(changeCrocAttitude) 
+                                                        userInfo:nil 
+                                                         repeats:NO] retain];
 }
 
 #pragma mark GameKit delegate
