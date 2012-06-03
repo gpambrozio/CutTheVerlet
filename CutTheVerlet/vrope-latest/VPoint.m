@@ -27,7 +27,7 @@
 }
 
 -(void)applyGravity:(float)dt {
-	y -= 10.0f*dt; //gravity magic number
+	y -= 1.0f*dt; //gravity magic number
 }
 
 -(void)setX:(float)argX {

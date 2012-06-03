@@ -156,7 +156,7 @@
 	vPoints = [[NSMutableArray alloc] init];
 	vSticks = [[NSMutableArray alloc] init];
 	ropeSprites = [[NSMutableArray alloc] init];
-	int segmentFactor = 12; //increase value to have less segments per rope, decrease to have more segments
+	int segmentFactor = 6; //increase value to have less segments per rope, decrease to have more segments
 	numPoints = distance/segmentFactor;
 	CGPoint diffVector = ccpSub(pointB,pointA);
 	float multiplier = distance / (numPoints-1);
