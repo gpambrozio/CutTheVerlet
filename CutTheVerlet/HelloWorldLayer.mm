@@ -8,6 +8,13 @@
 
 // Import the interfaces
 #import "HelloWorldLayer.h"
+#import "SimpleAudioEngine.h"
+
+#define kCuttingSound       @"cut.caf"
+#define kBiteSound          @"bite.caf"
+#define kSplashSound        @"splash.caf"
+#define kBackgroundMusic    @"CheeZeeJungle.caf"
+
 
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
@@ -75,7 +82,13 @@ enum {
 		// init physics
 		[self initPhysics];
         [self initLevel];
-		
+
+        [[SimpleAudioEngine sharedEngine] preloadEffect:kCuttingSound];
+        [[SimpleAudioEngine sharedEngine] preloadEffect:kBiteSound];
+        [[SimpleAudioEngine sharedEngine] preloadEffect:kSplashSound];
+        [[SimpleAudioEngine sharedEngine] playBackgroundMusic:kBackgroundMusic loop:YES];
+        [SimpleAudioEngine sharedEngine].backgroundMusicVolume = 0.4;
+
 		[self scheduleUpdate];
 	}
 	return self;
@@ -255,6 +268,8 @@ enum {
             toDestroy.push_back(potentialCandy);
             if (hitTheFloor)
             {
+                [[SimpleAudioEngine sharedEngine] playEffect:kSplashSound];
+
                 // If it hits the floor we'll remove all the physics of it and just simulate the pineapple sinking
                 CCSprite *sinkingCandy = (CCSprite*)potentialCandy->GetUserData();
                 
@@ -331,6 +346,9 @@ enum {
         // If the pineapple went into the croc's mouth, immediatelly closes it.
         [self changeCrocAttitude];
         
+        // Play sound effect
+        [[SimpleAudioEngine sharedEngine] playEffect:kBiteSound];
+
         // Check if the level should finish
         [self checkLevelFinish:NO];
     }
@@ -554,6 +572,9 @@ enum {
                 
                 VRope *newRope = [rope cutRopeInStick:stick newBodyA:newBodyA newBodyB:newBodyB];
                 [ropes addObject:newRope];
+                
+                [[SimpleAudioEngine sharedEngine] playEffect:kCuttingSound];
+                
                 return;
             }
         }
