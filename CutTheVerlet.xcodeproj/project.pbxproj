@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC23F6F51590574C00C37C40 /* bite.caf in Resources */ = {isa = PBXBuildFile; fileRef = EC23F6F11590574C00C37C40 /* bite.caf */; };
+		EC23F6F61590574C00C37C40 /* CheeZeeJungle.caf in Resources */ = {isa = PBXBuildFile; fileRef = EC23F6F21590574C00C37C40 /* CheeZeeJungle.caf */; };
+		EC23F6F71590574C00C37C40 /* cut.caf in Resources */ = {isa = PBXBuildFile; fileRef = EC23F6F31590574C00C37C40 /* cut.caf */; };
+		EC23F6F81590574C00C37C40 /* splash.caf in Resources */ = {isa = PBXBuildFile; fileRef = EC23F6F41590574C00C37C40 /* splash.caf */; };
 		ECB48CE6157A60F50066BE66 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECB48CE5157A60F50066BE66 /* QuartzCore.framework */; };
 		ECB48CE8157A60F50066BE66 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECB48CE7157A60F50066BE66 /* OpenGLES.framework */; };
 		ECB48CEA157A60F50066BE66 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECB48CE9157A60F50066BE66 /* OpenAL.framework */; };
@@ -190,6 +194,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EC23F6F11590574C00C37C40 /* bite.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bite.caf; sourceTree = "<group>"; };
+		EC23F6F21590574C00C37C40 /* CheeZeeJungle.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CheeZeeJungle.caf; sourceTree = "<group>"; };
+		EC23F6F31590574C00C37C40 /* cut.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = cut.caf; sourceTree = "<group>"; };
+		EC23F6F41590574C00C37C40 /* splash.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = splash.caf; sourceTree = "<group>"; };
 		ECB48CE1157A60F50066BE66 /* CutTheVerlet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CutTheVerlet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECB48CE5157A60F50066BE66 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		ECB48CE7157A60F50066BE66 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -581,6 +589,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EC23F6F01590574C00C37C40 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				EC23F6F11590574C00C37C40 /* bite.caf */,
+				EC23F6F21590574C00C37C40 /* CheeZeeJungle.caf */,
+				EC23F6F31590574C00C37C40 /* cut.caf */,
+				EC23F6F41590574C00C37C40 /* splash.caf */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		ECB48CD6157A60F50066BE66 = {
 			isa = PBXGroup;
 			children = (
@@ -638,6 +657,7 @@
 		ECB48CF8157A60F50066BE66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EC23F6F01590574C00C37C40 /* Sounds */,
 				ECB48F13157A6A4B0066BE66 /* Images */,
 				ECB48CF9157A60F50066BE66 /* Default.png */,
 				ECB48CFB157A60F50066BE66 /* fps_images.png */,
@@ -1250,6 +1270,10 @@
 				ECB48F1E157A6A4B0066BE66 /* rope_texture-hd.png in Resources */,
 				ECB48F1F157A6A4B0066BE66 /* rope_texture.png in Resources */,
 				ECB48F2C157AB4AA0066BE66 /* rope.png in Resources */,
+				EC23F6F51590574C00C37C40 /* bite.caf in Resources */,
+				EC23F6F61590574C00C37C40 /* CheeZeeJungle.caf in Resources */,
+				EC23F6F71590574C00C37C40 /* cut.caf in Resources */,
+				EC23F6F81590574C00C37C40 /* splash.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
