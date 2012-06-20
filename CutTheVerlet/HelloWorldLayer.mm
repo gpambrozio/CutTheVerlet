@@ -269,6 +269,17 @@ enum {
             if (hitTheFloor)
             {
                 [[SimpleAudioEngine sharedEngine] playEffect:kSplashSound];
+                
+                CGSize s = [[CCDirector sharedDirector] winSize];
+                CCLabelTTF *loseLabel = [[CCLabelTTF alloc] initWithString:@"Try Again!" 
+                                                                dimensions:s
+                                                                hAlignment:kCCTextAlignmentCenter
+                                                                vAlignment:kCCVerticalTextAlignmentCenter
+                                                                  fontName:@"Verdana-Bold"
+                                                                  fontSize:60.0];
+                loseLabel.color = ccc3(255, 0, 0);
+                loseLabel.anchorPoint = CGPointZero;
+                [self addChild:loseLabel];
 
                 // If it hits the floor we'll remove all the physics of it and just simulate the pineapple sinking
                 CCSprite *sinkingCandy = (CCSprite*)potentialCandy->GetUserData();
@@ -281,6 +292,7 @@ enum {
                                     {
                                         [self removeChild:node cleanup:YES];
                                         [self checkLevelFinish:YES];
+                                        [self removeChild:loseLabel cleanup:YES];
                                     }];
                 
                 // Run the actions sequentially.
@@ -366,6 +378,23 @@ enum {
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [self initLevel];
         });
+
+        if ([candies count] == 0 && !forceFinish)
+        {
+            CGSize s = [[CCDirector sharedDirector] winSize];
+            CCLabelTTF *winLabel = [[CCLabelTTF alloc] initWithString:@"Level Finished!" 
+                                                           dimensions:s
+                                                           hAlignment:kCCTextAlignmentCenter
+                                                           vAlignment:kCCVerticalTextAlignmentCenter
+                                                             fontName:@"Verdana-Bold"
+                                                             fontSize:60.0];
+            winLabel.color = ccc3(255, 0, 0);
+            winLabel.anchorPoint = CGPointZero;
+            [self addChild:winLabel];
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self removeChild:winLabel cleanup:YES];
+            });
+        }
     }
 }
 
