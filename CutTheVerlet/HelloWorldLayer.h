@@ -32,6 +32,9 @@
     NSMutableArray *candies;
     b2Body* groundBody;    // weak ref
     CCSpriteBatchNode *ropeSpriteSheet; // weak ref
+
+    b2Body *crocMouth_;          // weak ref
+    b2Fixture *crocMouthBottom_;    // weak ref
 }
 
 // returns a CCScene that contains the HelloWorldLayer as the only child

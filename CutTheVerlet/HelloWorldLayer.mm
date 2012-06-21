@@ -148,6 +148,21 @@ enum {
 	// right
 	groundBox.Set(b2Vec2(s.width/PTM_RATIO,s.height/PTM_RATIO), b2Vec2(s.width/PTM_RATIO,0));
 	groundBody->CreateFixture(&groundBox,0);
+    
+	// Define the croc's "mouth".
+	b2BodyDef crocBodyDef;
+	crocBodyDef.position.Set((s.width - croc_.textureRect.size.width)/PTM_RATIO, (croc_.position.y)/PTM_RATIO);
+	
+	crocMouth_ = world->CreateBody(&crocBodyDef);
+	
+	// Define the croc's box shape.
+	b2EdgeShape crocBox;
+	
+	// bottom
+	crocBox.Set(b2Vec2(5.0/PTM_RATIO,15.0/PTM_RATIO), b2Vec2(45.0/PTM_RATIO,15.0/PTM_RATIO));
+	crocMouthBottom_ = crocMouth_->CreateFixture(&crocBox,0);
+	
+    crocMouth_->SetActive(NO);
 }
 
 -(void) draw
